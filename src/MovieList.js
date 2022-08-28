@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     borderRadius: 8,
     paddingHorizontal: 4,
+    color: 'black',
   },
 });
 

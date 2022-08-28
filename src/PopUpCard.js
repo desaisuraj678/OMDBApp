@@ -87,13 +87,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  Year: {fontSize: 14, fontWeight: '400', padding: 2, left: 0},
-  Type: {fontSize: 14, fontWeight: '400', padding: 2, left: 0},
+  Year: {fontSize: 14, fontWeight: '400', padding: 2, left: 0, color: 'black'},
+  Type: {fontSize: 14, fontWeight: '400', padding: 2, left: 0, color: 'black'},
   Title: {
     fontSize: 17,
     fontWeight: '600',
     padding: 5,
     textAlign: 'center',
+    color: 'black',
   },
 });
 

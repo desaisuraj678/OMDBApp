@@ -26,6 +26,7 @@ const MovieCard = ({moviewCardItem}) => {
   return (
     <TouchableHighlight
       style={styles.cardWrapper}
+      activeOpacity={0.9}
       onPress={() => {
         modalHandler(true);
       }}>
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   Image: {width: '100%', height: (16 / 9) * cardWidth},
-  title: {fontSize: 16, fontWeight: '500', padding: 10},
+  title: {fontSize: 16, fontWeight: '500', padding: 10, color: 'black'},
 });
 
 export default MovieCard;
