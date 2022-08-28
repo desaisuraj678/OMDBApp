@@ -44,7 +44,7 @@ const MovieList = () => {
     return <MovieCard moviewCardItem={item} key={item?.imdbID} />;
   };
   const onEndReachedHandler = () => {
-    if (page.current < 10) {
+    if (page.current < 10 && !searchedValue.trim()) {
       fetchMoviewFromDB(page.current + 1);
       page.current = page.current + 1;
     }

@@ -12,6 +12,8 @@ import com.facebook.soloader.SoLoader;
 import com.omdbmovieapp.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 public class MainApplication extends Application implements ReactApplication {
 
