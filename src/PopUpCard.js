@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Modal,
   Dimensions,
@@ -6,12 +6,14 @@ import {
   Text,
   Image,
   View,
-  TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 
 const PopUpCard = ({modalHandler, modalVisible, moviewCardItem}) => {
   const cardWidth = Dimensions.get('window').width / 1.5;
+  const onRequestCloseHandler = () => {
+    modalHandler(false);
+  };
 
   return (
     <View style={styles.centeredView}>
@@ -19,50 +21,27 @@ const PopUpCard = ({modalHandler, modalVisible, moviewCardItem}) => {
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {
-          modalHandler(false);
-        }}>
+        onRequestClose={onRequestCloseHandler}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Image
-              source={{uri: moviewCardItem.Poster}}
+              source={{uri: moviewCardItem?.Poster}}
               style={{width: cardWidth, height: (16 / 9) * cardWidth}}
             />
-            <Text
-              numberOfLines={2}
-              style={{
-                fontSize: 17,
-                fontWeight: '600',
-                padding: 5,
-                textAlign: 'center',
-              }}>
-              {moviewCardItem.Title}
+            <Text numberOfLines={2} style={styles.Title}>
+              {moviewCardItem?.Title}
             </Text>
             <View style={{flexDirection: 'row'}}>
-              <Text
-                numberOfLines={1}
-                style={{fontSize: 14, fontWeight: '400', padding: 2, left: 0}}>
-                {moviewCardItem.Type}
+              <Text numberOfLines={1} style={styles.Type}>
+                {moviewCardItem?.Type}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={{fontSize: 14, fontWeight: '400', padding: 2, left: 0}}>
-                {moviewCardItem.Year}
+              <Text numberOfLines={1} style={styles.Year}>
+                {moviewCardItem?.Year}
               </Text>
             </View>
             <TouchableHighlight
-              onPress={() => modalHandler(false)}
-              style={{
-                borderRadius: 20,
-                padding: 10,
-                elevation: 2,
-                backgroundColor: '#F194FF',
-                width: 80,
-                height: 40,
-                top: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
+              onPress={onRequestCloseHandler}
+              style={styles.OKButton}>
               <Text>OK</Text>
             </TouchableHighlight>
           </View>
@@ -97,24 +76,23 @@ const styles = StyleSheet.create({
     shadowRadius: 11.95,
     elevation: 18,
   },
-  button: {
+  OKButton: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  buttonOpen: {
     backgroundColor: '#F194FF',
+    width: 80,
+    height: 40,
+    top: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
+  Year: {fontSize: 14, fontWeight: '400', padding: 2, left: 0},
+  Type: {fontSize: 14, fontWeight: '400', padding: 2, left: 0},
+  Title: {
+    fontSize: 17,
+    fontWeight: '600',
+    padding: 5,
     textAlign: 'center',
   },
 });

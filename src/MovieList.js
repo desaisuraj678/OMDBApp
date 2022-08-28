@@ -7,7 +7,14 @@
  */
 
 import React, {useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, FlatList, Text, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Text,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 import MovieCard from './MovieCard';
 
 const MovieList = () => {
@@ -25,17 +32,15 @@ const MovieList = () => {
       .then(res => {
         setMovieListData([...movieListData, ...res.Search]);
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(e => {});
   };
 
   useEffect(() => {
     fetchMoviewFromDB(page.current);
     return setMovieListData([]);
   }, []);
+
   const renderMoviewCard = ({item}) => {
-    console.log(item);
     return <MovieCard moviewCardItem={item} key={item?.imdbID} />;
   };
   const onEndReachedHandler = () => {
@@ -46,56 +51,37 @@ const MovieList = () => {
   };
   useEffect(() => {
     if (searchedValue) {
-      let searchedMoview = movieListData.filter(movie => {
-        console.log(movie.Title);
-        let parsedValue = searchedValue.toLowerCase();
-        if (movie.Title.toLowerCase().includes(parsedValue)) return true;
+      let searchedMoview = movieListData?.filter(movie => {
+        let parsedValue = searchedValue?.toLowerCase();
+        if (movie.Title?.toLowerCase()?.includes(parsedValue)) return true;
         return false;
       });
       setMovieDataToDisplay([...searchedMoview]);
-      console.log('sdsaed', searchedMoview);
     } else {
       setMovieDataToDisplay([...movieListData]);
     }
   }, [searchedValue, movieListData]);
+
   const onChangeTextHandler = value => {
     setSearchedValue(value);
   };
-  console.log('sdesai11', movieListData);
-  console.log('desai9', page.current, movieDataToDisplay);
-  const HeaderComponent = () => {
+
+  const headerComponent = () => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          height: 40,
-          alignItems: 'center',
-        }}>
-        <Text
-          style={{
-            color: 'white',
-            paddingLeft: 16,
-            fontSize: 18,
-            fontWeight: '600',
-          }}>
-          Movies
-        </Text>
+      <View style={styles.moviesHeader}>
+        <Text style={styles.headerContent}>Movies</Text>
         <TextInput
           placeholder="Search"
           placeholderTextColor={'gray'}
           onChangeText={onChangeTextHandler}
           value={searchedValue}
-          style={{
-            backgroundColor: 'white',
-            flex: 1,
-            height: 40,
-            marginHorizontal: 8,
-            borderRadius: 8,
-            paddingHorizontal: 4,
-          }}></TextInput>
+          style={styles.search}></TextInput>
       </View>
     );
+  };
+
+  const footerComponent = () => {
+    return <ActivityIndicator size="large" />;
   };
 
   return (
@@ -104,22 +90,43 @@ const MovieList = () => {
         numColumns={2}
         data={movieDataToDisplay}
         renderItem={renderMoviewCard}
-        keyExtractor={item => {
-          return item.imdbID;
-        }}
+        keyExtractor={item => item.imdbID}
         style={{flex: 1}}
         columnWrapperStyle={{justifyContent: 'center'}}
-        onEndReachedThreshold={0.9}
+        onEndReachedThreshold={0.1}
         onEndReached={onEndReachedHandler}
-        ListHeaderComponent={HeaderComponent()}
+        ListHeaderComponent={headerComponent()}
+        initialNumToRender={8}
         ListHeaderComponentStyle={{
           padding: 8,
         }}
+        ListFooterComponent={footerComponent}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  moviesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 40,
+    alignItems: 'center',
+  },
+  headerContent: {
+    color: 'white',
+    paddingLeft: 16,
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  search: {
+    backgroundColor: 'white',
+    flex: 1,
+    height: 40,
+    marginHorizontal: 8,
+    borderRadius: 8,
+    paddingHorizontal: 4,
+  },
+});
 
 export default MovieList;

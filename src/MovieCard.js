@@ -6,9 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
-  View,
   StyleSheet,
   Dimensions,
   Image,
@@ -16,44 +15,24 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import PopUpCard from './PopUpCard';
+const cardWidth = (Dimensions.get('window').width - 32 - 16) / 2;
 
 const MovieCard = ({moviewCardItem}) => {
-  const cardWidth = (Dimensions.get('window').width - 32 - 16) / 2;
   const [modalVisible, setModalVisible] = useState(false);
-  const modalHandler = modalState => {
+  const modalHandler = useCallback(modalState => {
     setModalVisible(modalState);
-  };
+  }, []);
 
   return (
     <TouchableHighlight
-      style={{
-        width: cardWidth,
-        minHeight: (16 / 9) * cardWidth,
-        backgroundColor: 'white',
-        margin: 5,
-        alignSelf: 'center',
-        borderRadius: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
-      }}
+      style={styles.cardWrapper}
       onPress={() => {
         modalHandler(true);
       }}>
       <>
-        <Image
-          source={{uri: moviewCardItem.Poster}}
-          style={{width: '100%', height: (16 / 9) * cardWidth}}
-        />
-        <Text
-          numberOfLines={1}
-          style={{fontSize: 16, fontWeight: '500', padding: 10}}>
-          {moviewCardItem.Title}
+        <Image source={{uri: moviewCardItem?.Poster}} style={styles.Image} />
+        <Text numberOfLines={1} style={styles.title}>
+          {moviewCardItem?.Title}
         </Text>
         {modalVisible && (
           <PopUpCard
@@ -67,6 +46,25 @@ const MovieCard = ({moviewCardItem}) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  cardWrapper: {
+    width: cardWidth,
+    minHeight: (16 / 9) * cardWidth,
+    backgroundColor: 'white',
+    margin: 5,
+    alignSelf: 'center',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+  },
+  Image: {width: '100%', height: (16 / 9) * cardWidth},
+  title: {fontSize: 16, fontWeight: '500', padding: 10},
+});
 
 export default MovieCard;

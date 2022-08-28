@@ -14,7 +14,9 @@ import RNBootSplash from 'react-native-bootsplash';
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   useEffect(() => {
-    RNBootSplash.hide({fade: true});
+    setTimeout(() => {
+      RNBootSplash.hide({fade: true});
+    }, 1500);
   }, []);
 
   const backgroundStyle = {
