@@ -12,8 +12,6 @@ import com.facebook.soloader.SoLoader;
 import com.omdbmovieapp.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import android.os.Bundle;
-import com.zoontek.rnbootsplash.RNBootSplash;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -53,7 +51,6 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public void onCreate() {
-    RNBootSplash.init(this);
     super.onCreate();
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
